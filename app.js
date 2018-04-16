@@ -4,8 +4,11 @@ var app = express();
 const pdf = require('./pdf');
 
 app.get('/', function (req, res) {
-  pdf.pdf('express ');
-  res.send('Hello World!');
+    res.send('hello');
+})
+
+app.get('/pdf', function (req, res) {
+  pdf.pdf(res, req.query.url);
 });
 
 app.listen(3000, function () {
