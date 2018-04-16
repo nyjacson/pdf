@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-const pdf = require('./pdf');
+const pdf = require('./pdfPromise2');
 
 app.get('/', function (req, res) {
     res.send('hello');
