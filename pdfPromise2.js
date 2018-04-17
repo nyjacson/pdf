@@ -2,19 +2,26 @@ const pdf = (res, query) => {
   const puppeteer = require('puppeteer');
 
   new Promise((resolve, reject) => {
-    puppeteer.launch().then(function (browser) {
-      browser.newPage().then(function (page) {
-        page.goto('https://google.co.jp');
-        const data = page.pdf();
-        res.contentType("application/pdf");
+    puppeteer
+      .launch({ headless: true })
+      .then(browser => {
+        return browser.newPage();
+      })
+      .then(page => {
+        page.goto('https://example.com').then(() => {
+          return page.pdf();
+        });
+      })
+      .then(data => {
+        res.contentType('application/pdf');
         res.send(data);
         res.status(200);
         res.end();
         resolve();
-        browser.close(); 
-      });
-    });
+        browser.close();
+      })
+      .catch(error => console.log('error', error));
   });
-}
+};
 
 module.exports.pdf = pdf;
